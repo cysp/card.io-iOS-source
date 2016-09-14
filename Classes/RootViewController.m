@@ -132,6 +132,7 @@
   cardIOView.useCardIOLogo = self.useCardIOLogoSwitch.on;
   //  cardIOView.allowFreelyRotatingCardGuide = NO;
   cardIOView.scannedImageDuration = [self.scannedImageDurationField.text floatValue];
+  cardIOView.numberOfUnblurredDigits = self.redactSwitch.on ? 7 : NSUIntegerMax;
 
   cardIOView.languageOrLocale = self.language;
 

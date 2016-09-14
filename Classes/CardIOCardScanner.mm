@@ -21,7 +21,6 @@
 @interface CardIOCardScanner ()
 
 // intentionally atomic -- card scanners get passed around between threads
-@property(assign, readwrite) ScannerState scannerState;
 @property(strong, readwrite) CardIOReadCardInfo *cardInfoCache;
 @property(assign, readwrite) BOOL cardInfoCacheDirty;
 @property(assign, readwrite) BOOL lastFrameWasUsable;
@@ -32,7 +31,14 @@
 
 @end
 
-@implementation CardIOCardScanner
+@implementation CardIOCardScanner {
+@private
+  ScannerState _scannerState;
+}
+
+- (ScannerState *)scannerState {
+  return &_scannerState;
+}
 
 - (void)markCachesDirty {
   self.cardInfoCacheDirty = YES;

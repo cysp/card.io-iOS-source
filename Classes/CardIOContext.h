@@ -41,6 +41,7 @@
 @property(nonatomic, retain, readwrite) UIColor *guideColor;
 @property(nonatomic, assign, readwrite) CGFloat scannedImageDuration;
 @property(nonatomic, assign, readwrite) BOOL allowFreelyRotatingCardGuide;
+@property(nonatomic, assign, readwrite) NSUInteger numberOfUnblurredDigits;
 
 @property(nonatomic, copy, readwrite)   NSString *scanInstructions;
 @property(nonatomic, assign, readwrite) BOOL hideCardIOLogo;

@@ -94,6 +94,9 @@
 /// Defaults to 1.0.
 @property(nonatomic, assign, readwrite) CGFloat scannedImageDuration;
 
+
+@property(nonatomic, assign, readwrite) NSUInteger numberOfUnblurredDigits;
+
 /// Name for orientation change notification.
 extern NSString * const CardIOScanningOrientationDidChangeNotification;
 

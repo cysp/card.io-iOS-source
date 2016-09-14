@@ -27,6 +27,8 @@
 
 // these properties are intentionally (superstitiously, anyhow) atomic -- card scanners get passed around between threads
 
+@property(assign, readonly) ScannerState *scannerState;
+
 // will return garbage unless -complete returns YES
 // the xOffsets and yOffset populated in cardInfo will be
 // from the most recent frame added via addFrame!

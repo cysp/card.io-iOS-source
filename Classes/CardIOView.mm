@@ -217,7 +217,7 @@ NSString * const CardIOScanningOrientationAnimationDuration = @"CardIOScanningOr
       [self vibrate];
       
       CardIOCreditCardInfo *cardInfo = [[CardIOCreditCardInfo alloc] init];
-      self.cardImage = [processedFrame imageWithGrayscale:NO];
+      self.cardImage = [processedFrame imageWithGrayscale:NO numberOfUnblurredDigits:self.numberOfUnblurredDigits];
       cardInfo.cardImage = self.cardImage;
       
       [self.config.scanReport reportEventWithLabel:@"scan_detection" withScanner:processedFrame.scanner];
@@ -238,7 +238,7 @@ NSString * const CardIOScanningOrientationAnimationDuration = @"CardIOScanningOr
   cardInfo.expiryYear = self.readCardInfo.expiryYear;
   cardInfo.scanned = YES;
 
-  self.cardImage = [processedFrame imageWithGrayscale:NO];
+  self.cardImage = [processedFrame imageWithGrayscale:NO numberOfUnblurredDigits:self.numberOfUnblurredDigits];
   cardInfo.cardImage = self.cardImage;
   
   [self.config.scanReport reportEventWithLabel:@"scan_success" withScanner:processedFrame.scanner];
@@ -333,6 +333,7 @@ CONFIG_PASSTHROUGH_READWRITE(BOOL, hideCardIOLogo, HideCardIOLogo)
 CONFIG_PASSTHROUGH_READWRITE(UIColor *, guideColor, GuideColor)
 CONFIG_PASSTHROUGH_READWRITE(CGFloat, scannedImageDuration, ScannedImageDuration)
 CONFIG_PASSTHROUGH_READWRITE(BOOL, allowFreelyRotatingCardGuide, AllowFreelyRotatingCardGuide)
+CONFIG_PASSTHROUGH_READWRITE(NSUInteger, numberOfUnblurredDigits, NumberOfUnblurredDigits)
 
 CONFIG_PASSTHROUGH_READWRITE(NSString *, scanInstructions, ScanInstructions)
 CONFIG_PASSTHROUGH_READWRITE(BOOL, scanExpiry, ScanExpiry)

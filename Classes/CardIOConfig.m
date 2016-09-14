@@ -10,6 +10,7 @@
 - (instancetype)init {
   if ((self = [super init])) {
     _allowFreelyRotatingCardGuide = YES;
+    _numberOfUnblurredDigits = NSUIntegerMax;
     _scanReport = [[CardIOAnalytics alloc] initWithContext:nil];
     _scanExpiry = YES;
   }

@@ -11,7 +11,7 @@
 #import "CardIOMacros.h"
 #import "CardIOCardScanner.h"
 #import "CardIOReadCardInfo.h"
-#import "dmz_constants.h"
+#import "dmz.h"
 #import "scan_analytics.h"
 
 #import "CardIODetectionMode.h"
@@ -217,8 +217,11 @@
   return (uint) self.foundTopEdge + (uint) self.foundBottomEdge + (uint) self.foundLeftEdge + (uint) self.foundRightEdge;
 }
 
-- (UIImage *)imageWithGrayscale:(BOOL)grayscale {
-  return grayscale ? [self.cardY UIImage] : [[CardIOIplImage rgbImageWithY:self.cardY cb:self.cardCb cr:self.cardCr] UIImage];
+- (UIImage *)imageWithGrayscale:(BOOL)grayscale numberOfUnblurredDigits:(NSUInteger)numberOfUnblurredDigits {
+  CardIOIplImage *cardImage = grayscale ? self.cardY : [CardIOIplImage rgbImageWithY:self.cardY cb:self.cardCb cr:self.cardCr];
+  int unblurDigits = numberOfUnblurredDigits > INT_MAX ? INT_MAX : (int)numberOfUnblurredDigits;
+  dmz_blur_card(cardImage.image, self.scanner.scannerState, unblurDigits);
+  return [cardImage UIImage];
 }
 
 #elif SIMULATE_CAMERA
@@ -242,16 +245,16 @@
 
 #endif
 
-- (NSData *)encodedImageUsingEncoding:(FrameEncoding)encoding {
+- (NSData *)encodedImageUsingEncoding:(FrameEncoding)encoding numberOfUnblurredDigits:(NSUInteger)numberOfUnblurredDigits {
   NSData *imageData = nil;
   
   switch(encoding) {
     case FrameEncodingColorPNG: {
-      imageData = UIImagePNGRepresentation([self imageWithGrayscale:NO]);
+      imageData = UIImagePNGRepresentation([self imageWithGrayscale:NO numberOfUnblurredDigits:numberOfUnblurredDigits]);
       break;      
     }
     case FrameEncodingGrayPNG: {
-      imageData = UIImagePNGRepresentation([self imageWithGrayscale:YES]);
+      imageData = UIImagePNGRepresentation([self imageWithGrayscale:YES numberOfUnblurredDigits:numberOfUnblurredDigits]);
       break;
     }
     default: {
